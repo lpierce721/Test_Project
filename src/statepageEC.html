@@ -1,0 +1,110 @@
+<?php
+/**
+ * Template Name: State Page
+ */
+
+get_header();
+?>
+<style>
+    *{
+        font-family: 'Open Sans', sans-serif !important;
+    }
+    .bg-status {
+    background-color: #00C5E9;
+}
+
+.title{
+    color: #001A41 !important;
+    padding: 0 0 0 0 !important;
+}
+
+.sub-title{
+    color: #2FC5E9;
+}
+
+.value{
+    color: white ;
+}
+
+.font-status{
+    margin-top: 1rem;
+    font-size: 0.8rem;
+}
+
+.btn-apply{
+    width: 20%;
+}
+.loan-table h5{
+    font-size: .9rem;
+    font-weight: 600;
+}
+.loan-table h1{
+    font-weight: 600;
+}
+.loan-table h5.description{
+    font-size: 1.2rem;
+}
+.loan-table .primary, #bottomApplyBtn{
+    background-color: #ffd216;
+    color: #001A41;
+    font-size: 1.3rem;
+    font-weight: 700;
+}
+    </style>
+<section id="primary" class="content-area">
+	<main id="main" class="site-main" role="main">
+		<div class="container">
+			<?php
+while (have_posts()): the_post();
+ ?>
+						<div class="row">
+							<div class="col-7 mt-5 pt-5 first-container">
+								<?php get_template_part('template-parts/content', 'content');?>
+							</div>
+							<div class="col-5 mt-5 pt-5 loan-table">
+								<?php require_once 'template-parts/loan-table.php'?>
+							</div>
+						</div>
+						<div class="row mt-2">
+							<div class="col-12 d-flex justify-content-center px-0">
+								<div class="col-3">
+									<button id="bottomApplyBtn" type="button" data-state="
+										<?php $key = "st";
+ echo get_post_meta($post->ID, $key, true);?>" class="w-100 btn btn-success px-5 py-2 primary">Apply Now
+									</button>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-12" id="footer-state"></div>
+						</div>
+						<?php
+
+endwhile; // End of the loop.
+?>
+		</div>
+	</main>
+	<!-- #main -->
+</section>
+<!-- #primary -->
+<script type="text/javascript">
+
+(function($){
+    var html = $("#stateFooter");
+    $(".first-container #stateFooter").remove();
+    $("#footer-state").append(html);
+
+    console.log(html);
+
+    $("#topApplyBtn, #bottomApplyBtn").click(function($this){
+
+        const btn = $this.target;
+
+        window.location.href = "https://application.explorecredit.com?"+"st="+$("#topApplyBtn").data("state");
+        console.log($("#topApplyBtn").data("state"));
+    })
+
+})(jQuery);
+</script>
+<?php
+get_footer();
